@@ -79,8 +79,6 @@ public final class Neighborhood implements Cell
 	 *  as the "prototype" argument.
 	 */
 
-	
-	
 	public Cell create()
 	{	return new Neighborhood(gridSize, grid[0][0]);
 	}
@@ -122,96 +120,6 @@ public final class Neighborhood implements Cell
 	 *  			 will change state in the next transition.
 	 */
 
-
-	public Cell northWestCellCal(int row, int column, Cell northwest, Cell north, Cell west) {
-		Cell northwestCell;
-		if(row==0) {
-		northwestCell = (column==0)
-				? northwest.edge(gridSize-1,gridSize-1)
-				: north.edge	(gridSize-1,column-1);
-		}
-		
-		else {
-		northwestCell  = (column == 0)
-					? west.edge(row-1, gridSize-1)
-					: grid[row-1][column-1];
-
-		}
-		return northwestCell;
-	}
-	
-	//northCell=	north.edge(gridSize-1,column);
-	public Cell northCellCal(int row, Cell north, int column) {
-		Cell northcell;
-		if(row==0) {
-			northcell = north.edge(gridSize-1,column);
-		}
-		else {
-			northcell = grid[row-1][column];
-		}
-		return northcell;
-	}
-	
-	
-	public Cell northEastCellCal(int row, int column, Cell northeast, Cell north, Cell east) {
-		Cell northeastCell;
-		if(row==0) {
-			northeastCell = (column == gridSize-1 )	? northeast.edge (gridSize-1, 0) : north.edge (gridSize-1, column+1);
-		}
-		else {
-			northeastCell = (column == gridSize-1) ? east.edge(row-1, 0) : grid[row-1][column+1];
-		}
-		return northeastCell;
-	}
-	
-	public Cell westCellCal(int row, int column, Cell west ) {
-		Cell westCell =(column == 0)? west.edge( row, gridSize-1): grid[row][column-1];
-		return westCell;
-	}
-	
-	public Cell eastCellCal(int row, int column, Cell east) {
-		Cell eastCell = (column == gridSize-1)? east.edge(row, 0): grid[row][column+1];
-		return eastCell;
-	}
-	
-	public Cell southWestCellCal(int row, int column, Cell southwest, Cell south, Cell west) {
-		Cell southwestCell;
-		if(row == gridSize-1) {
-			southwestCell = ( column==0 )? southwest.edge(0,gridSize-1)	: south.edge(0,column-1);
-			
-		}
-		else {
-			southwestCell  = (column == 0) ? west.edge(row+1, gridSize-1) : grid[row+1][column-1];
-		}
-		return southwestCell;
-	}
-	
-	public Cell southCellCal(int row, int column, Cell south) {
-		Cell southCell;
-		if(row == gridSize-1) {
-			southCell = south.edge(0,column);
-		}
-		else {
-			southCell = grid[row+1][column];
-		}
-		return southCell;
-	}
-	
-	public Cell southEastCellCal(int row,int column, Cell southeast, Cell south, Cell east) {
-		Cell southeastCell;
-		if(row == gridSize-1) {
-			southeastCell = (column == gridSize-1 )	? southeast.edge(0,0) : south.edge(0, column+1);
-			
-		}
-		else {
-			southeastCell = (column == gridSize-1) ? east.edge(row+1, 0) : grid[row+1][column+1];
-		}
-		return southeastCell;
-	}
-	
-	
-	
-	
 	public boolean figureNextState(	Cell north, 	Cell south,
 									Cell east,		Cell west,
 									Cell northeast, Cell northwest,
@@ -223,10 +131,10 @@ public final class Neighborhood implements Cell
 		// that ajoins me?
 
 		if(		amActive
-			||	north	 .isDisruptiveTo().the( Direction.SOUTH 	)
-			||	south	 .isDisruptiveTo().the( Direction.NORTH 	)
-			||	east	 .isDisruptiveTo().the( Direction.WEST  	)
-			||	west	 .isDisruptiveTo().the( Direction.EAST    	)
+			||	north	 .isDisruptiveTo().the( Direction.SOUTH 	  )
+			||	south	 .isDisruptiveTo().the( Direction.NORTH 	  )
+			||	east	 .isDisruptiveTo().the( Direction.WEST  	  )
+			||	west	 .isDisruptiveTo().the( Direction.EAST  	  )
 			||	northeast.isDisruptiveTo().the( Direction.SOUTHWEST )
 			||	northwest.isDisruptiveTo().the( Direction.SOUTHEAST )
 			||	southeast.isDisruptiveTo().the( Direction.NORTHWEST )
@@ -236,7 +144,7 @@ public final class Neighborhood implements Cell
 			Cell	northCell,		southCell,
 					eastCell,		westCell,
 					northeastCell, northwestCell,
-					southeastCell, southwestCell = null;
+					southeastCell, southwestCell;
 
 			// activeEdges.clear();
 					
@@ -245,29 +153,69 @@ public final class Neighborhood implements Cell
 				{
 					// Get the current cell's eight neighbors
 
-						//{=Neighborhood.get.neighbors}
-						//수정(함수 작성하여 적용 2가지로 나뉘기 떄문에 하나의 함수로 중복하여 두 가지 경우를 파악 가능)
-						
-					
-					northwestCell = northWestCellCal(row,column,northwest,north, west);
+					if(row == 0 )		//{=Neighborhood.get.neighbors}
+					{	northwestCell = (column==0)
+							? northwest.edge(gridSize-1,gridSize-1)
+							: north.edge	(gridSize-1,column-1)
+							;
 
-					northCell=	northCellCal(row, north, column);
+						northCell=	north.edge(gridSize-1,column);
 
-					northeastCell = northEastCellCal(row, column, northeast, north, east);
-					
+						northeastCell = (column == gridSize-1 )
+							? northeast.edge (gridSize-1, 0)
+							: north.edge	 (gridSize-1, column+1)
+							;
+					}
+					else
+					{	northwestCell  = (column == 0)
+							? west.edge(row-1, gridSize-1)
+							: grid[row-1][column-1]
+							;
 
-					westCell = westCellCal(row,column,west);
+						northCell = grid[row-1][column];
 
-					eastCell = eastCellCal(row, column, east);
-					
-						
-					southwestCell = southWestCellCal(row, column, southwest, south, west);
-						
-					southCell = southCellCal(row, column, south);
+						northeastCell = (column == gridSize-1)
+							? east.edge(row-1, 0)
+							: grid[row-1][column+1]
+							;
+					}
 
-					southeastCell = southEastCellCal(row, column, southeast, south, east);
-					
-					
+					westCell = (column == 0)
+							? west.edge( row, gridSize-1)
+							: grid[row][column-1]
+							;
+
+					eastCell = (column == gridSize-1)
+							? east.edge(row, 0)
+							: grid[row][column+1]
+							;
+
+					if(row == gridSize-1)
+					{	southwestCell = ( column==0 )
+							? southwest.edge(0,gridSize-1)
+							: south.edge(0,column-1)
+							;
+
+						southCell = south.edge(0,column);
+
+						southeastCell = (column == gridSize-1 )
+							? southeast.edge(0,0)
+							: south.edge(0, column+1)
+							;
+					}
+					else
+					{	southwestCell  = (column == 0)
+							? west.edge(row+1, gridSize-1)
+							: grid[row+1][column-1]
+							;
+
+						southCell = grid[row+1][column];
+
+						southeastCell = (column == gridSize-1)
+							? east.edge(row+1, 0)
+							: grid[row+1][column+1]
+							;
+					}
 
 					// Tell the cell to change its state. If
 					// the cell changed (the figureNextState request
@@ -518,17 +466,8 @@ public final class Neighborhood implements Cell
 	}
 
 	public Storable createMemento()
-	{	
-		Memento m;
-		try {
-			m = new NeighborhoodState();
-			transfer(m, new Point(0,0), Cell.STORE);
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw new UnsupportedOperationException(
-					"May not create memento of a unitary cell");
-		}
-		
+	{	Memento m = new NeighborhoodState();
+		transfer(m, new Point(0,0), Cell.STORE);
 		return m;
 	}
 

@@ -30,11 +30,7 @@ public class Files
 	 *  </PRE>
 	 */
 
-	public static File userSelected( final String startHere, 
-						final String extension,
-						final String description,
-						final String selectButtonText )
-									throws FileNotFoundException
+	public static File userSelected( final String startHere, final String extension, final String description, final String selectButtonText )throws FileNotFoundException
 	{	FileFilter filter = 
 			new FileFilter()
 			{	public boolean accept(File f)
