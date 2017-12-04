@@ -30,6 +30,7 @@ public class Universe extends JPanel
 {	final Cell  	outermostCell;
 	private static	final Universe 	theInstance = new Universe();
 	public Mediator mediator;
+	
 
 	/** The default height and width of a Neighborhood in cells.
 	 *  If it's too big, you'll run too slowly because
@@ -103,21 +104,13 @@ public class Universe extends JPanel
 				}
 			}
 		);
-
+		
+		if(Clock.clockListener==null) {
+			addListener();
+		}
 		
 		Clock.instance().addClockListener //{=Universe.clock.subscribe}
-		(	new Clock.Listener()
-			{	public void tick()
-				{	if( outermostCell.figureNextState
-						   ( Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,
-							 Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,Cell.DUMMY
-						   )
-					  )
-					{	if( outermostCell.transition() )
-							refreshNow();
-					}
-				}
-			}
+		(	Clock.clockListener
 		);
 		
 		mediator = Mediator.instance();
@@ -128,6 +121,21 @@ public class Universe extends JPanel
 	/** Singleton Accessor. The Universe object itself is manufactured
 	 *  in Neighborhood.createUniverse()
 	 */
+	
+	public void addListener(){
+		Clock.clockListener = new Clock.Listener()
+		{	public void tick()
+			{	if( outermostCell.figureNextState
+					   ( Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,
+						 Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,Cell.DUMMY
+					   )
+				  )
+				{	if( outermostCell.transition() )
+						refreshNow();
+				}
+			}
+		};
+	}
 
 	public static Universe instance()
 	{	return theInstance;

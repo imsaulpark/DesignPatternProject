@@ -30,6 +30,7 @@ public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
 	public Mediator mediator;
+	static Listener clockListener = null;
 	
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
@@ -44,7 +45,7 @@ public class Clock
 	/** The clock is a singleton. Get a reference to it by calling
 	 *  <code>Clock.instance()</code>. It's illegal to call
 	 *  <code>new Clock()</code>.
-	 *  싱글톤 제대로 안썼다. 고치자
+	 *  
 	 */
 	public synchronized static Clock instance()
 	{	if( instance == null )

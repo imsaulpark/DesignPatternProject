@@ -51,14 +51,14 @@ public class Mediator {
 						if( toDo=='T' )
 							clock.tick();				      // single tick
 						else
-							clock.startTicking(   toDo=='A' ? 500:	  // agonizing
-											toDo=='S' ? 150:	  // slow
-											toDo=='M' ? 70 :	  // medium
-											toDo=='F' ? 30 : 0 ); // fast
+							clock.startTicking(	toDo=='A' ? 500:	  // agonizing
+												toDo=='S' ? 150:	  // slow
+												toDo=='M' ? 70 :	  // medium
+												toDo=='F' ? 30 : 0 ); // fast
 					}
 				};
 																		// {=midSetup}
-			MenuSite.addLine(this,"speed","Stop",  			modifier);
+			MenuSite.addLine(this,"speed","Halt",  			modifier);
 			MenuSite.addLine(this,"speed","Tick (Single Step)",modifier);
 			MenuSite.addLine(this,"speed","Agonizing",	 	  	modifier);
 			MenuSite.addLine(this,"speed","Slow",		 		modifier);
