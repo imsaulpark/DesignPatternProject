@@ -121,6 +121,7 @@ public class Mediator {
 				public void actionPerformed(ActionEvent e)
 			        {	
 						if(operateType=="Clear") {
+							universe.outermostCell.clear();
 							universe.repaint();
 						}
 						else if(operateType=="Load") {

@@ -13,7 +13,8 @@ import com.holub.ui.MenuSite;
 public final class Life extends JFrame
 {	
 	private static JComponent universe;
-
+	public Mediator mediator;
+	
 	public static void main( String[] arguments )
 	{	new Life();
 	}
@@ -29,7 +30,11 @@ public final class Life extends JFrame
 		setDefaultCloseOperation	( EXIT_ON_CLOSE 		);
 		getContentPane().setLayout	( new BorderLayout()	);
 		getContentPane().add( Universe.instance(), BorderLayout.CENTER); //{=life.java.install}
-
+		
+		mediator = Mediator.instance();
+		mediator.setMenu_universe();
+		mediator.setMenu_Clock();
+		
 		pack();
 		setVisible( true );
 	}

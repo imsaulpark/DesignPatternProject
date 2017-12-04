@@ -27,9 +27,9 @@ import com.holub.life.Resident;
  */
 
 public class Universe extends JPanel
-{	final Cell  	outermostCell;
+{	static Cell outermostCell;
 	private static	final Universe 	theInstance = new Universe();
-	public Mediator mediator;
+	
 	
 
 	/** The default height and width of a Neighborhood in cells.
@@ -113,9 +113,6 @@ public class Universe extends JPanel
 		(	Clock.clockListener
 		);
 		
-		mediator = Mediator.instance();
-		mediator.setMenu_universe();
-		mediator.setMenu_Clock();
 	}
 
 	/** Singleton Accessor. The Universe object itself is manufactured
